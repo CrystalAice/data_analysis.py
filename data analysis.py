@@ -2,25 +2,39 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt  
 import seaborn as sns
-retail = pd.read_excel("Online Retail.xlsx")
 
 #create a sample of 5000 invoices
-retail = retail.head(5000)
+def sample():
+    retail = pd.read_excel("Online Retail.xlsx")
+    retail = retail.head(5000)
+    return retail
+
 
 #removing null entries
-retail = retail.dropna()
-retail = retail.drop_duplicates()
+def delete():
+    retail = sample()
+    retail = retail.dropna()
+    retail = retail.drop_duplicates()
+    return retail
 
 #removing returns
-retail = retail[~retail["InvoiceNo"].str.contains("C", na=False)]
+def remove():
+    retail = delete()
+    retail_refurnished = retail[~retail["InvoiceNo"].str.contains("C", na = False)]
+    return retail_refurnished
 
 #creating revenue column
-retail['Revenue'] = retail['Quantity'] * retail['UnitPrice']
+def specific():
+    retail_revenue = remove()
+    retail_revenue['Revenue'] = retail_revenue['Quantity'] * retail_revenue['UnitPrice']
+    return retail_revenue
 
 #plotting a revenue graph
-retail_data = retail[['Country', 'Revenue']]
-retail_graph = sns.barplot(x = 'Country', y = 'Revenue', data = retail_data)
+
+retail_data = specific()
+retail_table = retail_data[['Country', 'Revenue']]
+retail_graph = sns.barplot(x = 'Country', y = 'Revenue', data = retail_table)
 plt.title('Revenue vs Countries')
 plt.show()
 
-print(retail)
+print(specific())
