@@ -6,7 +6,8 @@ import seaborn as sns
 #create a sample of 5000 invoices
 def sample():
     retail = pd.read_excel("Online Retail.xlsx")
-    retail = retail
+    #Converting InvoiceDate to a proper datetime object
+    retail["InvoiceDate"] = retail.to_datetime(retail["InvoiceDate"])
     return retail
 
 
