@@ -7,7 +7,7 @@ import seaborn as sns
 def sample():
     retail = pd.read_excel("Online Retail.xlsx")
     #Converting InvoiceDate to a proper datetime object
-    retail["InvoiceDate"] = retail.to_datetime(retail["InvoiceDate"])
+    retail["InvoiceDate"] = pd.to_datetime(retail["InvoiceDate"])
     return retail
 
 
